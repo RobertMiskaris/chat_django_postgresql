@@ -1,5 +1,4 @@
 {% extends 'base.html' %} {% block content %}
-
 <div class="container center mt-5">
   <div class="mesgs" id="chat-messages">
     <div class="msg_history" id="chat_log">
@@ -25,12 +24,18 @@
 </div>
 
 
-{{ room_id|json_script:"room-name" }}
+{{ room_id|json_script:"roomname" }}
+{{ username|json_script:"username" }}
+
+
 <script>
-  const roomName = JSON.parse(document.getElementById('room-name').textContent);
-  // const userName = JSON.parse(document.getElementById('name-username').textContent);
+  const roomName = JSON.parse(document.getElementById('roomname').textContent);
+  const userName = JSON.parse(document.getElementById('username').textContent);
 
   console.log(roomName);
+  console.log(userName);
+
+
   const chatSocket = new WebSocket(
     'ws://' +
     window.location.host +
@@ -61,7 +66,7 @@
     const message = messageInputDom.value;
     chatSocket.send(JSON.stringify({
       'message': message,
-      // 'username': userName,
+      'username': userName,
       'room': roomName
     }));
     messageInputDom.value = '';

@@ -14,8 +14,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_id = self.scope['url_route']['kwargs']['room_id']
         self.room_group_name = 'messenger_%s' % self.room_id
-        print(self.room_id)
-        print(self.channel_name)
         
         await self.channel_layer.group_add(
                 self.room_group_name,
@@ -31,36 +29,37 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.channel_name
         )
 
-    #@database_sync_to_async
-    #def new_message(self, message, username, room_id):
-    #    Message.objects.create(content=message, room_id = room_id, username = User.objects.get(username = username)['id'])
+    @database_sync_to_async
+    def new_message(self, username, room_id, message):
+        Message.objects.create(message=message, room_id = room_id, username = User.objects.get(username = username))
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         print(text_data_json)
         message = text_data_json['message']
         print(message)
-        #username = text_data_json['username']
-        #print(username)
-        #room_id = text_data_json['room']
+        username = text_data_json['username']
+        print(username)
+        room_id = text_data_json['room']
         print(message)
 
-        #await self.new_message(username, room_id, message)
-        #await self.new_message(self, room_id, message)
+        await self.new_message(username, room_id, message)
 
         await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_message',
                     'message': message,
-        #            'username': username
+                    'username': username
                 }
             )
     async def chat_message(self, event):
+        username = event['username']
         message = event['message']
         print(message)
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'message': message
+            'message': message,
+            'username': username
         }))

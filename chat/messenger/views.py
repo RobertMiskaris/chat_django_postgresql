@@ -29,8 +29,9 @@ def messenger(request):
 
 def message_id(request, room_id):
     if request.user.is_authenticated:
+        print('username ',request.user)
         messages = Message.objects.filter(room_id=room_id)
-        return render(request, 'message.html', {'messages': messages, 'room_id': room_id})
+        return render(request, 'message.html', {'messages': messages, 'room_id': room_id, 'username': str(request.user)})
     else:
         return render(request, 'title.html')
 

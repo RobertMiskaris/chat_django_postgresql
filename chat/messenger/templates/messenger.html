@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block content %}
+<div class="limiter">
+  <div class="container-table100">
+    <div class="wrap-table100">
+      <div class="table100 ver1 m-b-110">
+        <div class="table100-head">
+          <table>
+            <thead>
+              <tr class="row100 head">
+                <th class="cell100 column1">Username</th>
+                <th class="cell100 column2">Date_last_message</th>
+                <th class="cell100 column3">Message</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        <div class="table100-body js-pscroll">
+          <table>
+            <tbody>
+
+              <tr class="row100">
+                <td class="cell100 column1">sam1</td>
+                <td class="cell100 column2">0</td>
+                <td class="cell100 column3"><a href="{% url 'messenger' %}"><button type="button" class="btn btn-primary">Push</button></a></td>
+              </tr>
+              <tr class="row100">
+                <td class="cell100 column1">sam2</td>
+                <td class="cell100 column2">0</td>
+                <td class="cell100 column3"><a href="{% url 'messenger' %}"><button type="button" class="btn btn-primary">Push</button></a></td>
+              </tr>
+              <tr class="row100">
+                <td class="cell100 column1">gauter</td>
+                <td class="cell100 column2">0</td>
+                <td class="cell100 column3"><a href="{% url 'messenger' %}"><button type="button" class="btn btn-primary">Push</button></a></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+{% endblock %}

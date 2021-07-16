@@ -1,0 +1,73 @@
+
+{% extends 'base.html' %} {% block content %}
+
+
+
+  <div class="s006">
+    <form method="POST">
+      {% csrf_token %}
+      <fieldset>
+        <legend>Search for an interlocutor</legend>
+        <div class="inner-form">
+          <div class="input-field">
+            <button class="btn-search" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+                </path>
+              </svg>
+            </button>
+            <input name="search" id="search" type="text" placeholder="" />
+          </div>
+        </div>
+        <div class="suggestion-wrap">
+          <span>New Arrivals</span>
+          <span>Ladies</span>
+          <span>Mens</span>
+          <span>Accessories</span>
+          <span>Sale</span>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+
+  <div class="limiter">
+    <div class="container-table100">
+      <div class="wrap-table100">
+        <div class="table100 ver1 m-b-110">
+          <div class="table100-head">
+            <table>
+              <thead>
+                <tr class="row100 head">
+                  <th class="cell100 column1">Username</th>
+                  <th class="cell100 column2">Date</th>
+                  <th class="cell100 column3">Message</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <div class="table100-body js-pscroll">
+            <table>
+              <tbody>
+		{% if users == '' %}
+                  <td class="cell100 column1">Undefiend user</td>
+                  <td class="cell100 column2">0</td>
+                  <td class="cell100 column2">0</td>
+		{% else %}
+
+                {% for i in users %}
+                <tr class="row100">
+                  <td class="cell100 column1">{{ i.username }}</td>
+                  <td class="cell100 column2">0</td>
+                  <td class="cell100 column3"><a href="{% url 'messenger' %}"><button type="button" class="btn btn-primary">Push</button></a></td>
+                </tr>
+                {% endfor %}
+		{% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+{% endblock %}
